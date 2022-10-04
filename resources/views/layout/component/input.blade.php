@@ -5,8 +5,8 @@
       <form method="POST" name="pos" id="formWarga">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         <input type="hidden" name="uid" />
-        <div class="card bg-emerald-300">
-          <div class="card-header bg-gradient-teal ">
+        <div class="card bg-emerald-300 ">
+          <div class="card-header bg-cyan ">
             <h3 class="card-title">Tambah Data Penduduk</h3>
           </div>
 

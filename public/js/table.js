@@ -94,6 +94,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         },
         body:JSON.stringify(data)
       }).then((res)=>{
+        console.log(res.status)
         if(res.status==200){
             swal("Berhasil!", {
             icon: "success",
@@ -107,11 +108,13 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         tgl_lahir.value=""
         status.option="pilih"
         }
-        swal("Upss!! Terjadi Kesalahan!", {
-            icon: "warning",
-            buttons: false,
-            timer: 3000
-          });
+        
+        //ERROR walau status 200
+        // swal("Upss!! Terjadi Kesalahan!", {
+        //     icon: "warning",
+        //     buttons: false,
+        //     timer: 3000
+        //   });
       }).then(()=>dataTable());
   });
     
@@ -250,6 +253,7 @@ const delate= async (id)=>{
   if(res.status==200){
     return res.json()
   }
+
    swal("Upss!! Terjadi Kesalahan!", {
     icon: "warning",
     buttons: false,

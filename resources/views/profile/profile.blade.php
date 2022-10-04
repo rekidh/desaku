@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | User Profile</title>
+  <title>APP DESA | User Profile</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -27,33 +28,26 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
-
-    <!-- error message -->
+    
+    {{-- SECCESS MESSAGE --}}
     @if(session()->has('update'))
-      <div id="toastsContainerTopRight" class="toasts-top-right fixed">
-          <div class="alert bg-success  fade show" >
-              <strong class="mr-auto">Success</strong>
-              <button data-dismiss="alert" type="button" class="ml-2 mb-1 close" aria-hidden="true">
-                <span aria-hidden="true">×</span>
-              </button>
-
-            <div class="toast-body">{{session('update')}}</div>
-          </div>
-        </div>
-    @endif
+      <script>
+      swal("Yeaa!! Success!", {
+          icon: "success",
+          buttons: false,
+          timer: 3000
+        })
+      </script>
+    @endif 
+    {{-- ERROR MESSAGE --}}
     @if(session()->has('updateErr'))
-      <div id="toastsContainerTopRight" class="toasts-top-right fixed">
-          <div class="alert bg-danger fade show" >
-              <strong class="mr-auto">Upss!!</strong>
-              <small>error</small>
-              <button data-dismiss="alert" type="button" class="ml-2 mb-1 close" aria-hidden="true">
-                <span aria-hidden="true">×</span>
-              </button>
-
-            <div class="toast-body">{{session('updateErr')}}</div>
-          </div>
-        </div>
+      <script>
+      swal("Upss!! Cek your password!", {
+          icon: "warning",
+          buttons: false,
+          timer: 3000
+        })
+      </script> 
     @endif
 
     <!-- Content Header (Page header) -->
@@ -76,41 +70,18 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5">
+        <div class="">
+          <div class="col-md-9 m-auto " >
 
-            <!--  trigger modal -->
-
-          <div class="modal fade " id="modal-lg" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content"> 
-                <div class="header ">
-                  <button type="button" class="close mx-2 " data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <img name="imgPrev" class="mx-auto d-block img-circle col-sm-6 "
-                    src="{{asset('/images')}}/{{Auth::user()->user_image}}" alt="User profile picture"
-                    >
-                  </div>
-                <div class="modal-footer ">
-                  <form method="POST" action="{{ route('userImage') }}" enctype="multipart/form-data">
-                    @csrf
-                    <input onchange="revImage()" type="file" class="form-control" name="image" id="image" />   
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                  </form>
-                </div>
-              </div>
-              <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-          </div>
-
+            <form method="POST" action="{{ route('userImage') }}" enctype="multipart/form-data">
+              @csrf
+              <input hidden onchange="revImage()" type="file" class="form-control" name="image" id="image" />   
+              <button hidden type="submit" class="btn btn-primary">Save changes</button>
+            </form>
 
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
-              <div class="card-body box-profile">
+              <div class="card-body ">
                 <div  class="text-center">
                   <img name="profile_user" class="profile-user-img img-fluid img-circle"
                        src="{{asset('/images')}}/{{Auth::user()->user_image}}"
@@ -119,70 +90,10 @@
 
                 <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
+                <p class="text-muted text-center">{{Auth::user()->email}}</p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Email</b> <a class="float-right">{{Auth::user()->email}}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Join</b> <a class="float-right">{{Auth::user()->created_at}}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>last update</b> <a class="float-right">{{Auth::user()->updated_at}}</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          </div>
-            <!-- /.card -->
-            <!-- activity -->
-          <div class="col-md-7">
-            <div class="card">
-              <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-                  {{-- <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li> --}}
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
-                </ul>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content">
-                  <div class="active tab-pane" id="activity">
-                    
-                    <!-- Post -->
-                    <div class="post clearfix">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="{{asset('AdminLTE/dist')}}/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                        <span class="description">Shared publicly - 7:30 PM today</span>
-                      </div>
-                    </div>
-                    <!-- /.post -->
-
-                    <!-- Post -->
-                    <div class="post clearfix">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="{{asset('AdminLTE/dist')}}/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                        <span class="description">Sent you a message - 3 days ago</span>
-                      </div>
-                    </div>
-                    <!-- /.post -->
-
-                    
-                  </div>
-
-
-                  <div class="tab-pane" id="settings">
-{{-- FORM IMAGE --}}
+                <div class="tab-pane" id="settings">
+                {{-- FORM IMAGE --}}
                     <form action="{{route('update_profile')}}" method="POST" class="form-horizontal">
                       @csrf
                       {{-- <input type="hidden" name="id" value="{{Auth::user()->id}}"> --}}
@@ -246,14 +157,71 @@
                         </div>
                       </div>
                     </form>
-
-
-                  </div>
-                  <!-- /.tab-pane -->
                 </div>
 
 
-                
+                {{-- <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Email</b> <a class="float-right">{{Auth::user()->email}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Join</b> <a class="float-right">{{Auth::user()->created_at}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>last update</b> <a class="float-right">{{Auth::user()->updated_at}}</a>
+                  </li>
+                </ul> --}}
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+            <!-- /.card -->
+
+            <!-- activity -->
+          <div class="col-md-9 m-auto">
+            <div class="card">
+              <div class="card-header p-2 bg-cyan  ">
+                <ul class="nav nav-pills">
+                  <li class="nav-item " >Log Activity</li>
+                  {{-- <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li> --}}
+                </ul>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+
+                <div class="active tab-pane" id="activity">
+              
+                    <!-- Post -->
+                    <div class="post clearfix">
+                      <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="{{asset('AdminLTE/dist')}}/img/user1-128x128.jpg" alt="user image">
+                        <span class="username">
+                          <a href="#">Jonathan Burke Jr.</a>
+                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                        </span>
+                        <span class="description">Shared publicly - 7:30 PM today</span>
+                      </div>
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post clearfix">
+                      <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="{{asset('AdminLTE/dist')}}/img/user7-128x128.jpg" alt="User Image">
+                        <span class="username">
+                          <a href="#">Sarah Ross</a>
+                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                        </span>
+                        <span class="description">Sent you a message - 3 days ago</span>
+                      </div>
+                    </div>
+                    <!-- /.post -->
+                  </div>
+                </div>
+
+
+
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->
             </div>
@@ -305,7 +273,7 @@
  
   }
   function revImage(){
-    const imgprv = document.querySelector("[name='imgPrev']" )
+    const imgprv = document.querySelector("[name='profile_user']" )
     const image = document.getElementById("image" )
     imgprv.style.display='block'
     const oFReader = new FileReader()
@@ -314,16 +282,25 @@
       imgprv.src=oFEvent.target.result
     }
   }
-  const hideModal=()=>{
-    const element = document.getElementById("modal-lg")
-    element.classList.remove("show")
-    element.style.display ="none"
-    element.removeAttribute("role","dialog")
-  }
-  document.querySelector('[name="profile_user"]').addEventListener("click",showModal)
-  document.querySelectorAll('[data-dismiss="modal"]').forEach(element => {
-    element.addEventListener("click",hideModal)
-  }); 
+
+  document.querySelector("[name='profile_user']" ).addEventListener("click", (e)=>{
+    document.getElementById("image" ).click()
+  })
+
+
+
+
+  // const hideModal=()=>{
+  //   const element = document.getElementById("modal-lg")
+  //   element.classList.remove("show")
+  //   element.style.display ="none"
+  //   element.removeAttribute("role","dialog")
+  // }
+  // document.querySelector('[name="profile_user"]').addEventListener("click",showModal)
+  // document.querySelectorAll('[data-dismiss="modal"]').forEach(element => {
+  //   element.addEventListener("click",hideModal)
+  // }); 
+
 </script>
 </body>
 </html>

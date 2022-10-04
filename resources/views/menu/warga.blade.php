@@ -66,7 +66,7 @@
 
   <div class="container-fluid container-md">
     <div class="card">
-      <div class="card-header bg-gradient-teal   ">
+      <div class="card-header bg-cyan   ">
         <h3 class="card-title">Tabulasi Data Penduduk</h3>
       </div>
 
