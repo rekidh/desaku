@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {{-- croperjs --}}
+  {{-- <link  href="/path/to/cropper.css" rel="stylesheet"> --}}
+  {{-- script sweetalert --}}
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -73,18 +75,12 @@
         <div class="">
           <div class="col-md-9 m-auto " >
 
-            <form method="POST" action="{{ route('userImage') }}" enctype="multipart/form-data">
-              @csrf
-              <input hidden onchange="revImage()" type="file" class="form-control" name="image" id="image" />   
-              <button hidden type="submit" class="btn btn-primary">Save changes</button>
-            </form>
-
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
               <div class="card-body ">
                 <div  class="text-center">
                   <img name="profile_user" class="profile-user-img img-fluid img-circle"
-                       src="{{asset('/images')}}/{{Auth::user()->user_image}}"
+                       src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
                        alt="User profile picture">
                 </div>
 
@@ -222,31 +218,38 @@
     </section>
     <!-- /.content -->
     <div class="modal fade" id="fullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
-      <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
+      <div class="modal-dialog ">
+        <div class="modal-content ">
           <div class="modal-header">
             <h5 class="modal-title h5" >Sesuaikan Foto</h5>
             <button type="button" id="close-modal" class="btn btn-tool" ><i class="fas fa-times"></i></button>
           </div>
           <div class="modal-body">
-            <img name="modal-crop"
-                       src="{{asset('/images')}}/{{Auth::user()->user_image}}"
+            <img name="modal-crop" class=" img-fluid "
+                       src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
                        alt="User profile picture">
           </div>
           <div class="modal-footer">
-            <button type="button" id="btn-crop-save" class="btn btn-primary " >Save & Change</button>
+            <button type="button" id="btn-select" class="btn btn-default  " >Select file</button>
+            <button type="button" id="btn-crop-save" value="Submit form" class="btn btn-primary " >Save & Change</button>
           </div>
         </div>
       </div>
     </div>
     {{-- ..... --}}
+
+      <form method="POST" action="{{ route('userImage') }}" id="submit-image"  enctype="multipart/form-data">
+        @csrf
+        <input hidden onchange="imagePreview()" id="image" name="image" type="file" />   
+        <input hidden name="old_image" value="{{Auth::user()->user_image}}" />   
+        {{-- <button hidden id="submit-image" type="submit"  >update_profile</button> --}}
+      </form>
+
+
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2022 <a href="https://github.com/rekidh?tab=repositories">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -255,17 +258,20 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-
+</body>
+<!-- .croper js -->
+{{-- <script src="/path/to/cropper.js"></script> --}}
 <!-- jQuery -->
 <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('AdminLTE/plugins')}}/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE/dist')}}/js/adminlte.min.js"></script>
-<script src="{{asset('AdminLTE/dist')}}/plugins/toastr/toastr.min.js"></script>
+<script src="{{asset('AdminLTE')}}/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('AdminLTE/dist')}}plugins/sweetalert2/sweetalert2.min.js"></script>
+  <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+
+{{-- <script src="{{asset('AdminLTE/dist')}}plugins/sweetalert2/sweetalert2.min.js"></script> --}}
 
 <script>
   
@@ -274,17 +280,18 @@
     element.classList.add("show")
     element.style.display ="block"
     element.setAttribute("role","dialog")
+    // element.setAttribute("tabindex",2)
 
     // .getAttribute("src")
     // img.setAttribute("class", "democlass")
  
   }
-  function revImage(){
+  function imagePreview(){
     // const imgprv = document.querySelector("[name='profile_user']" )
     const imgprv = document.querySelector("[name='modal-crop']" )
     const image = document.getElementById("image" )
     imgprv.style.display='block'
-    showModal()
+
     const oFReader = new FileReader()
     oFReader.readAsDataURL(image.files[0])
     oFReader.onload=function(oFEvent){
@@ -293,7 +300,13 @@
   }
 
   document.querySelector("[name='profile_user']" ).addEventListener("click", (e)=>{
+      showModal()
+  })
+  document.getElementById("btn-select" ).addEventListener("click", (e)=>{
     document.getElementById("image" ).click()
+  })
+  document.getElementById("btn-crop-save" ).addEventListener("click", (e)=>{
+    document.getElementById("submit-image" ).submit()
   })
 
 document.getElementById("close-modal").addEventListener("click", (e)=>{
@@ -313,5 +326,5 @@ document.getElementById("close-modal").addEventListener("click", (e)=>{
   // }); 
 
 </script>
-</body>
+
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -116,19 +117,28 @@ class UserAuth extends Controller
 
     public function userImage(Request $req)
     {
-        $req->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
-        ]);
-        $imageName = str_replace(' ', '_', Auth::user()->name) . '.' . $req->image->extension(); // name format
-        $req->image->move(public_path('images'), $imageName);
+        if ($req->file('image')) { // cek ada apa tidaknya image baru
+            if ($req->old_image) {
+                $destination = "storage/images/" . $req->old_image;
+                File::delete($destination);
+            }
 
-        $userId = Auth::user()->id;
-        $update = User::find($userId);
-        $update->user_image = $imageName;
+            $h = getdate();
+            $req->validate([
+                'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+            ]);
 
-        if ($update->save()) {
-            return back()->with('update', 'Image uploaded Successfully!');
-        }
-        return back()->with('updateErr', 'Image uploaded Error!');
+            $name = str_replace(' ', '_', Auth::user()->name);
+            $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $req->image->extension(); // name format
+            $req->image->move(public_path('storage/images'), $imageName);
+
+            $userId = Auth::user()->id;
+            $update = User::find($userId);
+            $update->user_image = $imageName;
+            if ($update->save()) {
+                return back()->with('update', 'Image uploaded Successfully!');
+            }
+            return back()->with('updateErr', 'Image uploaded Error!');
+        };
     }
 }
