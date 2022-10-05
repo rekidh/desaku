@@ -159,18 +159,6 @@
                     </form>
                 </div>
 
-
-                {{-- <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Email</b> <a class="float-right">{{Auth::user()->email}}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Join</b> <a class="float-right">{{Auth::user()->created_at}}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>last update</b> <a class="float-right">{{Auth::user()->updated_at}}</a>
-                  </li>
-                </ul> --}}
               </div>
               <!-- /.card-body -->
             </div>
@@ -233,6 +221,25 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <div class="modal fade" id="fullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title h5" >Sesuaikan Foto</h5>
+            <button type="button" id="close-modal" class="btn btn-tool" ><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <img name="modal-crop"
+                       src="{{asset('/images')}}/{{Auth::user()->user_image}}"
+                       alt="User profile picture">
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btn-crop-save" class="btn btn-primary " >Save & Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- ..... --}}
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -263,7 +270,7 @@
 <script>
   
   const showModal=()=>{
-    const element = document.getElementById("modal-lg")
+    const element = document.getElementById("fullscreen")
     element.classList.add("show")
     element.style.display ="block"
     element.setAttribute("role","dialog")
@@ -273,9 +280,11 @@
  
   }
   function revImage(){
-    const imgprv = document.querySelector("[name='profile_user']" )
+    // const imgprv = document.querySelector("[name='profile_user']" )
+    const imgprv = document.querySelector("[name='modal-crop']" )
     const image = document.getElementById("image" )
     imgprv.style.display='block'
+    showModal()
     const oFReader = new FileReader()
     oFReader.readAsDataURL(image.files[0])
     oFReader.onload=function(oFEvent){
@@ -287,15 +296,17 @@
     document.getElementById("image" ).click()
   })
 
+document.getElementById("close-modal").addEventListener("click", (e)=>{
+    hideModal()
+  })
 
 
-
-  // const hideModal=()=>{
-  //   const element = document.getElementById("modal-lg")
-  //   element.classList.remove("show")
-  //   element.style.display ="none"
-  //   element.removeAttribute("role","dialog")
-  // }
+  const hideModal=()=>{
+    const element = document.getElementById("fullscreen")
+    element.classList.remove("show")
+    element.style.display ="none"
+    element.removeAttribute("role","dialog")
+  }
   // document.querySelector('[name="profile_user"]').addEventListener("click",showModal)
   // document.querySelectorAll('[data-dismiss="modal"]').forEach(element => {
   //   element.addEventListener("click",hideModal)
