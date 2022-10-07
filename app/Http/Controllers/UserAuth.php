@@ -108,10 +108,6 @@ class UserAuth extends Controller
         //         $notNull[$key] = $value;
         //     }
         // }
-        // $update = User::where('id', $userId);
-        // ->where('destination', 'San Diego')
-        // ->update(['delayed' => 1]);
-        // User::find($userId);
 
     }
 

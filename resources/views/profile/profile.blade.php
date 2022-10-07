@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
+  <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.css ">
   {{-- croperjs --}}
   {{-- <link  href="/path/to/cropper.css" rel="stylesheet"> --}}
   {{-- script sweetalert --}}
@@ -224,8 +225,8 @@
             <h5 class="modal-title h5" >Sesuaikan Foto</h5>
             <button type="button" id="close-modal" class="btn btn-tool" ><i class="fas fa-times"></i></button>
           </div>
-          <div class="modal-body">
-            <img name="modal-crop" class=" img-fluid "
+          <div class="modal-body container-fluid position-relative  ">
+            <img name="modal-crop" 
                        src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
                        alt="User profile picture">
           </div>
@@ -270,6 +271,7 @@
 <script src="{{asset('AdminLTE')}}/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE for demo purposes -->
   <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+  <script src="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.js "></script>
 
 {{-- <script src="{{asset('AdminLTE/dist')}}plugins/sweetalert2/sweetalert2.min.js"></script> --}}
 
@@ -296,6 +298,20 @@
     oFReader.readAsDataURL(image.files[0])
     oFReader.onload=function(oFEvent){
       imgprv.src=oFEvent.target.result
+
+        new Cropper(document.querySelector("[name='modal-crop']" ), {
+  aspectRatio: 1 / 1,
+  crop(event) {
+    console.log(event.detail.x);
+    console.log(event.detail.y);
+    console.log(event.detail.width);
+    console.log(event.detail.height);
+    console.log(event.detail.rotate);
+    console.log(event.detail.scaleX);
+    console.log(event.detail.scaleY);
+  },
+})
+
     }
   }
 
