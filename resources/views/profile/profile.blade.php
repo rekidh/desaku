@@ -225,8 +225,8 @@
             <h5 class="modal-title h5" >Sesuaikan Foto</h5>
             <button type="button" id="close-modal" class="btn btn-tool" ><i class="fas fa-times"></i></button>
           </div>
-          <div class="modal-body container-fluid position-relative  ">
-            <img name="modal-crop" 
+          <div class="modal-body text-center overflow-hidden  ">
+            <img name="modal-crop" class="img-fluid " 
                        src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
                        alt="User profile picture">
           </div>
@@ -260,8 +260,6 @@
   <!-- /.control-sidebar -->
 </div>
 </body>
-<!-- .croper js -->
-{{-- <script src="/path/to/cropper.js"></script> --}}
 <!-- jQuery -->
 <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -273,8 +271,6 @@
   <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
   <script src="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.js "></script>
 
-{{-- <script src="{{asset('AdminLTE/dist')}}plugins/sweetalert2/sweetalert2.min.js"></script> --}}
-
 <script>
   
   const showModal=()=>{
@@ -282,15 +278,15 @@
     element.classList.add("show")
     element.style.display ="block"
     element.setAttribute("role","dialog")
-    // element.setAttribute("tabindex",2)
 
-    // .getAttribute("src")
-    // img.setAttribute("class", "democlass")
- 
   }
+
+  
+
   function imagePreview(){
-    // const imgprv = document.querySelector("[name='profile_user']" )
     const imgprv = document.querySelector("[name='modal-crop']" )
+    const imgCropper = document.querySelector(".cropper-canvas" )
+
     const image = document.getElementById("image" )
     imgprv.style.display='block'
 
@@ -298,21 +294,27 @@
     oFReader.readAsDataURL(image.files[0])
     oFReader.onload=function(oFEvent){
       imgprv.src=oFEvent.target.result
+      
+      // replace(oFEvent.target.result )
 
-        new Cropper(document.querySelector("[name='modal-crop']" ), {
-  aspectRatio: 1 / 1,
-  crop(event) {
-    console.log(event.detail.x);
-    console.log(event.detail.y);
-    console.log(event.detail.width);
-    console.log(event.detail.height);
-    console.log(event.detail.rotate);
-    console.log(event.detail.scaleX);
-    console.log(event.detail.scaleY);
-  },
-})
+       let i = new Cropper(imgprv, {
+        aspectRatio: 1,
+        dragMode:'move',
+        restore:false,
+        giudes:false,
+        center:false,
+        cropBoxResizable:false,
+        viewMode:3,
+        // minCanvasHeigth:400
+        ready(){
+          console.log(this.cropper.getContainerData())
+          
+        }
+      })
+
 
     }
+    
   }
 
   document.querySelector("[name='profile_user']" ).addEventListener("click", (e)=>{
