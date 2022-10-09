@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
-  <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.css ">
+  <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/croperJs/cropper.css ">
   {{-- croperjs --}}
   {{-- <link  href="/path/to/cropper.css" rel="stylesheet"> --}}
   {{-- script sweetalert --}}
@@ -219,17 +219,18 @@
     </section>
     <!-- /.content -->
     <div class="modal fade" id="fullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
-      <div class="modal-dialog ">
+      <div class="modal-dialog modal-lg   ">
         <div class="modal-content ">
           <div class="modal-header">
             <h5 class="modal-title h5" >Sesuaikan Foto</h5>
             <button type="button" id="close-modal" class="btn btn-tool" ><i class="fas fa-times"></i></button>
           </div>
-          <div class="modal-body text-center overflow-hidden  ">
-            <img name="modal-crop" class="img-fluid " 
-                       src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
-                       alt="User profile picture">
+          <div class="modal-body d-flex align-items-center justify-content-center" style="height: 70vh;  ">
+              <img name="modal-crop" style="height: 300px; width:300px" 
+              src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
+              alt="User profile picture">
           </div>
+          <div id="prev"></div>
           <div class="modal-footer">
             <button type="button" id="btn-select" class="btn btn-default  " >Select file</button>
             <button type="button" id="btn-crop-save" value="Submit form" class="btn btn-primary " >Save & Change</button>
@@ -246,8 +247,6 @@
         {{-- <button hidden id="submit-image" type="submit"  >update_profile</button> --}}
       </form>
 
-
-  </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2022 <a href="https://github.com/rekidh?tab=repositories">AdminLTE.io</a>.</strong> All rights reserved.
@@ -268,63 +267,56 @@
 <script src="{{asset('AdminLTE/dist')}}/js/adminlte.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-  <script src="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.js "></script>
+<script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+<script src="{{asset('AdminLTE/dist')}}/croperJs/cropper.min.js "></script>
 
 <script>
+          
+    const crop=new Cropper(document.querySelector("[name='modal-crop']" ), {
+        aspectRatio: 1,
+        dragMode:'move',
+        restore:false,
+        giudes:false,
+        center:false,
+        viewMode:1,
+      })
   
   const showModal=()=>{
     const element = document.getElementById("fullscreen")
     element.classList.add("show")
     element.style.display ="block"
     element.setAttribute("role","dialog")
-
   }
-
-  
 
   function imagePreview(){
     const imgprv = document.querySelector("[name='modal-crop']" )
     const imgCropper = document.querySelector(".cropper-canvas" )
-
-    const image = document.getElementById("image" )
     imgprv.style.display='block'
+    const image = document.getElementById("image" )
 
     const oFReader = new FileReader()
     oFReader.readAsDataURL(image.files[0])
     oFReader.onload=function(oFEvent){
       imgprv.src=oFEvent.target.result
-      
-      // replace(oFEvent.target.result )
-
-       let i = new Cropper(imgprv, {
-        aspectRatio: 1,
-        dragMode:'move',
-        restore:false,
-        giudes:false,
-        center:false,
-        cropBoxResizable:false,
-        viewMode:3,
-        // minCanvasHeigth:400
-        ready(){
-          console.log(this.cropper.getContainerData())
-          
-        }
-      })
-
-
-    }
-    
+      crop.replace(oFEvent.target.result)
+    } 
   }
 
-  document.querySelector("[name='profile_user']" ).addEventListener("click", (e)=>{
+
+  document.querySelector("[name='profile_user']").addEventListener("click", (e)=>{
       showModal()
   })
   document.getElementById("btn-select" ).addEventListener("click", (e)=>{
     document.getElementById("image" ).click()
   })
   document.getElementById("btn-crop-save" ).addEventListener("click", (e)=>{
-    document.getElementById("submit-image" ).submit()
+    const img= crop.getCroppedCanvas({
+      height:400,
+      width:400
+    }).toDataURL("image/png")
+    console.log(img)
+    // document.getElementById("image" ).src=img
+    // document.getElementById("submit-image" ).submit()
   })
 
 document.getElementById("close-modal").addEventListener("click", (e)=>{
@@ -337,11 +329,9 @@ document.getElementById("close-modal").addEventListener("click", (e)=>{
     element.classList.remove("show")
     element.style.display ="none"
     element.removeAttribute("role","dialog")
+    crop.replace(document.querySelector("[name='profile_user']").src)
+    crop.reset()
   }
-  // document.querySelector('[name="profile_user"]').addEventListener("click",showModal)
-  // document.querySelectorAll('[data-dismiss="modal"]').forEach(element => {
-  //   element.addEventListener("click",hideModal)
-  // }); 
 
 </script>
 
