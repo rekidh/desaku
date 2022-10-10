@@ -27,7 +27,7 @@ $image_base64 = base64_decode($image_parts[1]);
 
 ```
 $folderPath = public_path('storage/images/');
-\$imageFullPath = $folderPath . $imageName;
+$imageFullPath = $folderPath . $imageName;
 // $req->image->move(public_path('storage/images'), $imageName);
 file_put_contents($imageFullPath, $image_base64);
 ```
