@@ -121,16 +121,31 @@ class UserAuth extends Controller
 
             $h = getdate();
             $req->validate([
-                'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+                // 'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+                'base64-image' => 'required'
             ]);
 
+            // Base 64 
+            $image_parts = explode(";base64,", $req->get('base64-image'));
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            // decode image 
+            $image_base64 = base64_decode($image_parts[1]);
+
+            // named
             $name = str_replace(' ', '_', Auth::user()->name);
-            $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $req->image->extension(); // name format
-            $req->image->move(public_path('storage/images'), $imageName);
+            $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $image_type; // name format
+
+            $folderPath = public_path('storage/images/');
+            $imageFullPath = $folderPath . $imageName;
+            // $req->image->move(public_path('storage/images'), $imageName);
+            file_put_contents($imageFullPath, $image_base64);
 
             $userId = Auth::user()->id;
             $update = User::find($userId);
             $update->user_image = $imageName;
+
+
             if ($update->save()) {
                 return back()->with('update', 'Image uploaded Successfully!');
             }

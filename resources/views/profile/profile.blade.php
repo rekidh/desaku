@@ -244,7 +244,7 @@
         @csrf
         <input hidden onchange="imagePreview()" id="image" name="image" type="file" />   
         <input hidden name="old_image" value="{{Auth::user()->user_image}}" />   
-        {{-- <button hidden id="submit-image" type="submit"  >update_profile</button> --}}
+        <input type="hidden" name="base64-image" id="base64-image" class="form-control">
       </form>
 
   <!-- /.content-wrapper -->
@@ -310,13 +310,14 @@
     document.getElementById("image" ).click()
   })
   document.getElementById("btn-crop-save" ).addEventListener("click", (e)=>{
-    const img= crop.getCroppedCanvas({
+    const canvasBase64= crop.getCroppedCanvas({
       height:400,
       width:400
     }).toDataURL("image/png")
-    console.log(img)
-    // document.getElementById("image" ).src=img
-    // document.getElementById("submit-image" ).submit()
+
+    document.getElementById("base64-image").value=canvasBase64
+
+    document.getElementById("submit-image" ).submit()
   })
 
 document.getElementById("close-modal").addEventListener("click", (e)=>{
