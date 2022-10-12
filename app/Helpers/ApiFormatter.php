@@ -10,7 +10,7 @@ class ApiFormatter
     "data" => null
   ];
 
-  public static function creatApi($code = null, $message = null, $data = null)
+  public static function create_Api($code = null, $message = null, $data = null)
   {
     self::$response['code'] = $code;
     self::$response['message'] = $message;

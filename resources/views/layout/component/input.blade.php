@@ -53,7 +53,8 @@
                 </select>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-8">
+              <button type="button"  id="button-refresh"  class="btn btn-primary"><i class="fas fa-sync"></i></button>
               <button type="submit" id="button-sub" class="btn btn-primary">Submit</button>
             </div>
           </div>

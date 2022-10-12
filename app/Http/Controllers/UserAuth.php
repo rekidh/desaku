@@ -8,14 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Stmt\TryCatch;
-
-use function GuzzleHttp\Promise\all;
 
 class UserAuth extends Controller
 {
 
-    public function userRegister(Request $req)
+    public function user_register(Request $req)
     {
 
         $req->validate(
@@ -42,7 +39,7 @@ class UserAuth extends Controller
         }
     }
 
-    public function userLogin(Request $req)
+    public function user_login(Request $req)
     {
         try {
 
@@ -75,7 +72,7 @@ class UserAuth extends Controller
     }
 
 
-    public function updateProfile(Request $req)
+    public function update_profile(Request $req)
     {
         try {
             if (Hash::check($req->password, Auth::user()->password)) {  //cek password lama
@@ -94,24 +91,11 @@ class UserAuth extends Controller
             }
             return back()->with('updateErr', 'sepertinya anda tidak memasukan password');
         } catch (\Exception $e) {
-            return back()->messages();
-            // back()->with('update', 'Terjadi Kesalahan');
+            return back()->with('update', 'Terjadi Kesalahan');
         }
-        // $array = $req->all();
-        // $isNull = [];
-        // $notNull = [];
-
-        // foreach ($array as $key => $value) {
-        //     if (is_null($value)) {
-        //         $isNull[$key] = $value;
-        //     } else {
-        //         $notNull[$key] = $value;
-        //     }
-        // }
-
     }
 
-    public function userImage(Request $req)
+    public function user_image(Request $req)
     {
         if ($req->file('image')) { // cek ada apa tidaknya image baru
             if ($req->old_image) {
@@ -138,7 +122,6 @@ class UserAuth extends Controller
 
             $folderPath = public_path('storage/images/');
             $imageFullPath = $folderPath . $imageName;
-            // $req->image->move(public_path('storage/images'), $imageName);
             file_put_contents($imageFullPath, $image_base64);
 
             $userId = Auth::user()->id;

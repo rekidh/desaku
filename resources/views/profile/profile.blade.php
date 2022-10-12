@@ -12,9 +12,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/croperJs/cropper.css ">
-  {{-- croperjs --}}
-  {{-- <link  href="/path/to/cropper.css" rel="stylesheet"> --}}
-  {{-- script sweetalert --}}
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -24,9 +22,7 @@
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-fuchsia  elevation-4">
-
     @include('layout/component/side')
-
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -249,14 +245,9 @@
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2022 <a href="https://github.com/rekidh?tab=repositories">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2022 <a href="https://github.com/rekidh?tab=repositories">Ten</a>.</strong>software.
   </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 </body>
 <!-- jQuery -->

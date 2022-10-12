@@ -2,7 +2,7 @@ const _token = document.querySelector('meta[name="csrf-token"]').content;
 // ###########FUNC FETCH DATA###########
 // TABLE DISPLAY
   const dataTable = async (url_param)=> { 
-    const url = url_param? url_param:'http://127.0.0.1:8000/api_warga';
+    const url = url_param? url_param:'http://127.0.0.1:8000/api/api_warga';
      await fetch(url).then((res)=>{
       if(res.status==200){
         return  res.json()
@@ -62,7 +62,17 @@ const _token = document.querySelector('meta[name="csrf-token"]').content;
   // ###########FUNC ONLOAD###########
   
   window.addEventListener("onLoad",dataTable());
-  
+
+  // ##################REFRESH#########################
+  document.getElementById("button-refresh").addEventListener("click",(e)=>{
+      const uid = document.querySelector('[name="uid"]').value=null;
+      const kk = document.querySelector('[name="no_kk"]').value="";
+      const nik = document.querySelector('[name="no_nik"]').value="";
+      const nama = document.querySelector('[name="nama"]').value="";
+      const gender = document.querySelector('[name="radio"]:checked').value="";
+      const tgl_lahir = document.querySelector('[name="tgl_lahir"]').value="";
+      const status = document.querySelector('[name="status"]').value="";
+  })
   
 // ###########FUNCTION CREATE DATA###########
 document.querySelector("#button-sub").addEventListener("click",async function(e){
@@ -74,6 +84,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
       const gender = document.querySelector('[name="radio"]:checked');
       const tgl_lahir = document.querySelector('[name="tgl_lahir"]');
       const status = document.querySelector('[name="status"]');
+      console.log(uid.value,'l')
       const data={
         "id":uid.value,
         "kk":kk.value,
@@ -84,23 +95,25 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         "status":status.value,
         "_token": _token        
       };
-      await fetch('http://127.0.0.1:8000/api_warga/create',{
+      await fetch('http://127.0.0.1:8000/api/api_warga/create',{
         method:'POST',
         headers: {
-          'Accept' : "aplication/json, text/plaint ,*/*",
-          'Access-Control-Allow-Origin': "*",
-          'Content-Type': 'aplication/json',
+          'Accept' : 'application/json, text/plaint ,*/*',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          'Connection': 'Keep-Alive',
           'x-csrf-token':data._token
         },
         body:JSON.stringify(data)
       }).then((res)=>{
         console.log(res.status)
         if(res.status==200){
-            swal("Berhasil!", {
+            swal("Berhasil! create", {
             icon: "success",
             buttons: false,
             timer: 1000
           });
+        uid.value=null
         kk.value=""
         nik.value=""
         nama.value=""
@@ -123,7 +136,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
 document.querySelector('[name="search_input"]').addEventListener("input",async function (e){
   const value = e.target.value;
 
-  await fetch(`http://127.0.0.1:8000/api_warga?search=${value}`)
+  await fetch(`http://127.0.0.1:8000/api/api_warga?search=${value}`)
   .then((res)=>{
     if(res.status==200){
       return  res.json()
@@ -189,32 +202,9 @@ document.querySelector('[name="search_input"]').addEventListener("input",async f
 
 }) //closing tag event search
 
-// // ###########FUNC ALERT###########
-// const alertDelete=(msg,cb)=>{
-  
-//     swal({
-//     title: "Anda Yakin ?",
-//     text: `Akan menghapus  ${msg}`,
-//     icon: "warning",
-//     buttons: true,
-//     dangerMode: true,
-//   })
-//   .then((willDelete) => {
-//     if (willDelete) {
-//       swal("Penghapusan Berhasil!", {
-//         icon: "success",
-//         buttons: false,
-//         timer: 1000
-//       });
-//       cb()
-//     } 
-    
-//   });
-
-// }
 // ###########FUNC###########
 const edit = async (id)=>{
-  await fetch(`http://127.0.0.1:8000/api_warga/getDataById/${id}`)
+  await fetch(`http://127.0.0.1:8000/api/api_warga/getDataById/${id}`)
   .then((res)=>{ 
   if(res.status==200){
     return res.json()
@@ -225,6 +215,8 @@ const edit = async (id)=>{
     timer: 3000
   });
 }).then((res)=>{
+    console.log(res)
+
     //Code here
       let i = res.data.jenis_kelamin=='L'?0:1
       const uid = document.querySelector('[name="uid"]').value=res.data.id;
@@ -248,7 +240,7 @@ function smoothscroll(){
 }
 // ###########FUNC###########
 const delate= async (id)=>{
- await fetch(`http://127.0.0.1:8000/api_warga/getDataById/${id}`)
+ await fetch(`http://127.0.0.1:8000/api/api_warga/getDataById/${id}`)
   .then((res)=>{ 
   if(res.status==200){
     return res.json()
@@ -268,7 +260,7 @@ const delate= async (id)=>{
     dangerMode: true,
     }).then(async (comfirm)=>{ //deleted execute
         if(comfirm){
-          await fetch(`http://127.0.0.1:8000/api_warga/delete/${id}`).then((res)=>res.json())
+          await fetch(`http://127.0.0.1:8000/api/api_warga/delete/${id}`).then((res)=>res.json())
             .then((res)=>{
               if(res.code==200){
                 swal("Penghapusan Berhasil!", {

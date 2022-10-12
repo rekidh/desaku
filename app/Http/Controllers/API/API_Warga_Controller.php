@@ -20,9 +20,8 @@ class API_Warga_Controller extends Controller
     {
         $data = DataPenduduk::when(request('search'), function ($query) {
             $query->where('nama', 'like', '%' . request('search') . '%');
-        })->orderBy('id', 'desc')->paginate(2);
-        // ->get();
-        return ApiFormatter::creatApi(200, 'success', $data);
+        })->orderBy('id', 'desc')->paginate(10);
+        return ApiFormatter::create_Api(200, 'success', $data);
     }
 
     /**
@@ -32,7 +31,7 @@ class API_Warga_Controller extends Controller
      */
     public function create(Request $req)
     {
-        if ($req->id == null || false) {    // create
+        if ($req->id) {    // create
             $warga = DataPenduduk::create([
                 "kk" => intval($req->post('kk')),
                 "nik" => intval($req->post('nik')),
@@ -44,12 +43,11 @@ class API_Warga_Controller extends Controller
 
             if ($warga) {
 
-                return ApiFormatter::creatApi(200, "success", $warga);
+                return ApiFormatter::create_Api(200, "success", $warga);
             } else {
-                return ApiFormatter::creatApi(400, "Gagal");
+                return ApiFormatter::create_Api(400, "Gagal");
             }
         }
-
         $update = DataPenduduk::find($req->id);
         $update->kk = $req->kk;
         $update->nik = $req->nik;
@@ -60,9 +58,9 @@ class API_Warga_Controller extends Controller
 
         if ($update->save()) {
 
-            return ApiFormatter::creatApi(200, "success", $update);
+            return ApiFormatter::create_Api(200, "success", $update);
         } else {
-            return ApiFormatter::creatApi(400, "Gagal");
+            return ApiFormatter::create_Api(400, "Gagal");
         }
     }
 
@@ -74,7 +72,7 @@ class API_Warga_Controller extends Controller
      */
     public function store(Request $request)
     {
-        return ApiFormatter::creatApi(200, "succes", $request)->header(
+        return ApiFormatter::create_Api(200, "succes", $request)->header(
             'Access-Control-Allow-Origin',
             "*"
         );
@@ -91,9 +89,9 @@ class API_Warga_Controller extends Controller
         $getting = DataPenduduk::find($id);
         if ($getting) {
 
-            return ApiFormatter::creatApi(200, "success", $getting);
+            return ApiFormatter::create_Api(200, "success", $getting);
         } else {
-            return ApiFormatter::creatApi(400, "Gagal");
+            return ApiFormatter::create_Api(400, "Gagal");
         }
     }
 
@@ -111,9 +109,9 @@ class API_Warga_Controller extends Controller
         // $update =  DataPenduduk::find($req->id)->update($req->all());
         // if ($update) {
 
-        //     return ApiFormatter::creatApi(200, "success", $update);
+        //     return ApiFormatter::create_Api(200, "success", $update);
         // } else {
-        //     return ApiFormatter::creatApi(400, "Gagal");
+        //     return ApiFormatter::create_Api(400, "Gagal");
         // }
     }
 
@@ -140,9 +138,9 @@ class API_Warga_Controller extends Controller
         $delete =  DataPenduduk::find($id)->delete();
         if ($delete) {
 
-            return ApiFormatter::creatApi(200, "success", $delete);
+            return ApiFormatter::create_Api(200, "success", $delete);
         } else {
-            return ApiFormatter::creatApi(400, "Gagal");
+            return ApiFormatter::create_Api(400, "Gagal");
         }
     }
 }
