@@ -31,6 +31,7 @@ class API_Warga_Controller extends Controller
      */
     public function create(Request $req)
     {
+        // noted error submid
         if ($req->id) {    // create
             $warga = DataPenduduk::create([
                 "kk" => intval($req->post('kk')),
