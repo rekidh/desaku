@@ -31,8 +31,18 @@ class API_Warga_Controller extends Controller
      */
     public function create(Request $req)
     {
-        // noted error submid
-        if ($req->id) {    // create
+
+        if ($req->id == null) {    // create
+            $req->validate(
+                [
+                    'kk' => 'required',
+                    'nik' => 'required',
+                    'nama' => 'required',
+                    'jenis_kelamin' => 'required',
+                    'tanggal_lahir' => 'required',
+                    'status' => 'required',
+                ]
+            );
             $warga = DataPenduduk::create([
                 "kk" => intval($req->post('kk')),
                 "nik" => intval($req->post('nik')),
@@ -48,20 +58,22 @@ class API_Warga_Controller extends Controller
             } else {
                 return ApiFormatter::create_Api(400, "Gagal");
             }
-        }
-        $update = DataPenduduk::find($req->id);
-        $update->kk = $req->kk;
-        $update->nik = $req->nik;
-        $update->nama = $req->nama;
-        $update->jenis_kelamin = $req->gender;
-        $update->tanggal_lahir = $req->tgl_lahir;
-        $update->status = $req->status;
-
-        if ($update->save()) {
-
-            return ApiFormatter::create_Api(200, "success", $update);
         } else {
-            return ApiFormatter::create_Api(400, "Gagal");
+
+            $update = DataPenduduk::find($req->id);
+            $update->kk = $req->kk;
+            $update->nik = $req->nik;
+            $update->nama = $req->nama;
+            $update->jenis_kelamin = $req->gender;
+            $update->tanggal_lahir = $req->tgl_lahir;
+            $update->status = $req->status;
+
+            if ($update->save()) {
+
+                return ApiFormatter::create_Api(200, "success", $update);
+            } else {
+                return ApiFormatter::create_Api(400, "Gagal");
+            }
         }
     }
 

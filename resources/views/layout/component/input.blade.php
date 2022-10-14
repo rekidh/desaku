@@ -29,7 +29,7 @@
               </div>
               <div class="form-group mt-3 mx-1 col-4 row">
                 <div class="form-check mt-4 row col-6">
-                  <input class="form-check-input" type="radio" name="radio" checked='' value="L">
+                  <input class="form-check-input" type="radio" name="radio" checked value="L">
                   <label class="form-check-label">Laki-laki</label>
                 </div>
                 <div class="form-check mt-4 row col-6">

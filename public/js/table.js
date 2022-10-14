@@ -65,13 +65,17 @@ const _token = document.querySelector('meta[name="csrf-token"]').content;
 
   // ##################REFRESH#########################
   document.getElementById("button-refresh").addEventListener("click",(e)=>{
-      const uid = document.querySelector('[name="uid"]').value=null;
-      const kk = document.querySelector('[name="no_kk"]').value="";
-      const nik = document.querySelector('[name="no_nik"]').value="";
-      const nama = document.querySelector('[name="nama"]').value="";
-      const gender = document.querySelector('[name="radio"]:checked').value="";
-      const tgl_lahir = document.querySelector('[name="tgl_lahir"]').value="";
-      const status = document.querySelector('[name="status"]').value="";
+      document.querySelector('[name="uid"]').removeAttribute("value")
+      document.querySelector('[name="no_kk"]').value="";
+      document.querySelector('[name="no_nik"]').value="";
+      document.querySelector('[name="nama"]').value="";
+      document.querySelector('[name="tgl_lahir"]').value="";
+      document.querySelector('[name="status"]').value="Pilih";
+       swal("Berhasil! create", {
+            // icon: "info",
+            buttons: false,
+            timer: 200
+          })
   })
   
 // ###########FUNCTION CREATE DATA###########
@@ -84,7 +88,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
       const gender = document.querySelector('[name="radio"]:checked');
       const tgl_lahir = document.querySelector('[name="tgl_lahir"]');
       const status = document.querySelector('[name="status"]');
-      console.log(uid.value,'l')
+      console.log(status.value)
       const data={
         "id":uid.value,
         "kk":kk.value,
@@ -106,20 +110,18 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         },
         body:JSON.stringify(data)
       }).then((res)=>{
-        console.log(res.status)
         if(res.status==200){
             swal("Berhasil! create", {
             icon: "success",
             buttons: false,
             timer: 1000
           });
-        uid.value=null
+        uid.removeAttribute("value")
         kk.value=""
         nik.value=""
         nama.value=""
-        gender.value=""
         tgl_lahir.value=""
-        status.option="pilih"
+        status.value="Pilih"
         }
         
         //ERROR walau status 200
@@ -215,18 +217,16 @@ const edit = async (id)=>{
     timer: 3000
   });
 }).then((res)=>{
-    console.log(res)
 
     //Code here
       let i = res.data.jenis_kelamin=='L'?0:1
-      const uid = document.querySelector('[name="uid"]').value=res.data.id;
-      const kk = document.querySelector('[name="no_kk"]').value=res.data.kk
-      const nik = document.querySelector('[name="no_nik"]').value=res.data.nik
-      const nama = document.querySelector('[name="nama"]').value=res.data.nama
-      const gender = document.querySelectorAll('[name="radio"]')[i].checked=true
-      const tgl_lahir = document.querySelector('[name="tgl_lahir"]').value=res.data.tanggal_lahir
-      const status = document.querySelector('[name="status"]').value=res.data.status
-      // creatData("http://127.0.0.1:8000/api_warga/edit","PUT")
+      document.querySelector('[name="uid"]').value=res.data.id;
+      document.querySelector('[name="no_kk"]').value=res.data.kk
+      document.querySelector('[name="no_nik"]').value=res.data.nik
+      document.querySelector('[name="nama"]').value=res.data.nama
+      document.querySelectorAll('[name="radio"]')[i].checked=true
+      document.querySelector('[name="tgl_lahir"]').value=res.data.tanggal_lahir
+      document.querySelector('[name="status"]').value=res.data.status
       smoothscroll()
   })
 
@@ -263,17 +263,19 @@ const delate= async (id)=>{
           await fetch(`http://127.0.0.1:8000/api/api_warga/delete/${id}`).then((res)=>res.json())
             .then((res)=>{
               if(res.code==200){
+                console.log(res.code)
                 swal("Penghapusan Berhasil!", {
                 icon: "success",
                 buttons: false,
                 timer: 1000
-              })
+                })
               dataTable()
+              return
               }
                  swal("Upss!! Terjadi Kesalahan!", {
                   icon: "warning",
                   buttons: false,
-                  timer: 3000
+                  timer: 5000
                 });
           })
         }
