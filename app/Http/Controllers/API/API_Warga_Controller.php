@@ -18,9 +18,17 @@ class API_Warga_Controller extends Controller
      */
     public function index()
     {
-        $data = DataPenduduk::when(request('search'), function ($query) {
-            $query->where('nama', 'like', '%' . request('search') . '%');
-        })->orderBy('id', 'desc')->paginate(10);
+        $data = DataPenduduk::when(
+            request('search'),
+            function ($query) {
+                $query->where('nama', 'like', '%' . request('search') . '%')
+                    ->orWhere('kk', 'like', '%' . request('search') . '%')
+                    ->orWhere('jenis_kelamin', 'like', '%' . request('search') . '%')
+                    ->orWhere('status', 'like', '%' . request('search') . '%')
+                    ->orWhere('tanggal_lahir', 'like', '%' . request('search') . '%')
+                    ->orWhere('nik', 'like', '%' . request('search') . '%');
+            }
+        )->orderBy('id', 'desc')->paginate(10);
         return ApiFormatter::create_Api(200, 'success', $data);
     }
 
