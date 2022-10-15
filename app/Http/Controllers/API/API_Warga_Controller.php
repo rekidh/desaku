@@ -46,8 +46,8 @@ class API_Warga_Controller extends Controller
                     'kk' => 'required',
                     'nik' => 'required',
                     'nama' => 'required',
-                    'jenis_kelamin' => 'required',
-                    'tanggal_lahir' => 'required',
+                    'gender' => 'required',
+                    'tgl_lahir' => 'required',
                     'status' => 'required',
                 ]
             );

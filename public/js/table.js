@@ -110,6 +110,8 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         },
         body:JSON.stringify(data)
       }).then((res)=>{
+        let i = res.json().then((e)=>console.log(e))
+
         if(res.status==200){
             swal("Berhasil! create", {
             icon: "success",
