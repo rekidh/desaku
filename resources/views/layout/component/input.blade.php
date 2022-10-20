@@ -2,7 +2,7 @@
 <section class="content container-fluid container-md mb-md-5 mt-md-3">
   <div class="row">
     <div class="col-md-9 ">
-      <form method="POST" name="pos" id="formWarga">
+      <form name="pos" id="formWarga">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         <input type="hidden" name="uid" />
         <div class="card bg-emerald-300 ">
