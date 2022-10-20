@@ -31,3 +31,7 @@ $imageFullPath = $folderPath . $imageName;
 // $req->image->move(public_path('storage/images'), $imageName);
 file_put_contents($imageFullPath, $image_base64);
 ```
+
+##POSTGRESQL SETTING
+
+-   jika kamuu menggunakan postgre untuk database nya kamu harus mengaktifkan extention pgsql di axmmp nya
