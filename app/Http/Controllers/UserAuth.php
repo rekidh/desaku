@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserAuth extends Controller
 {
@@ -99,7 +100,7 @@ class UserAuth extends Controller
     {
         if ($req->file('image')) { // cek ada apa tidaknya image baru
             if ($req->old_image) {
-                $destination = "storage/images/" . $req->old_image;
+                $destination = public_path('image/') . $req->old_image;
                 File::delete($destination);
             }
 
@@ -120,7 +121,7 @@ class UserAuth extends Controller
             $name = str_replace(' ', '_', Auth::user()->name);
             $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $image_type; // name format
 
-            $folderPath = public_path('storage/images/');
+            $folderPath = public_path('image/');
             $imageFullPath = $folderPath . $imageName;
             file_put_contents($imageFullPath, $image_base64);
 
