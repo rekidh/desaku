@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/summernote/summernote-bs4.min.css">
-  <script type="text/javascript" src="{{resource_path('js/app.js')}}"></script>
+  {{-- <script type="text/javascript" src="{{resource_path('js/app.js')}}"></script> --}}
   @vite(['resources/js/app.js'])
   
 </head>
