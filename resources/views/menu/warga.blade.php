@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/summernote/summernote-bs4.min.css">
+  <script type="text/javascript" src="{{resource_path('js/app.js')}}"></script>
+  @vite(['resources/js/app.js'])
   
 </head>
 
@@ -126,13 +128,13 @@
 </div>
 <footer class="main-footer">
   <div class="float-right d-none d-sm-block">
-    <b>Version</b> 3.2.0
+    <b>Version</b> 0.1
   </div>
   <strong>Copyright &copy; 2022<a href="https://adminlte.io">Ten</a>.</strong>software
 </footer>
 </body>
 <!-- ./wrapper -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.all.min.js"></script>
 <!-- jQuery -->
 <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -153,6 +155,5 @@
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE/dist')}}/js/adminlte.min.js"></script>
 
-<script src="{{asset('js')}}/table.js"  ></script>
 </body>
 </html>

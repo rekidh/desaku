@@ -1,41 +1,38 @@
-
 const _token = document.querySelector('meta[name="csrf-token"]').content;
-
 // ###########FUNC FETCH DATA###########
 // TABLE DISPLAY
   const dataTable = async (url_param)=> { 
-    const url = url_param? url_param:`https://app-desa.herokuapp.com/api/api_warga`;
-     await fetch(url).then((res)=>{
-      if(res.status==200){
+    const url = url_param? url_param:`${window.location.origin}/api/api_warga`; //gunakan ENV
+    await fetch(url).then((res)=>{
+      if(res.status==200){ //cek status code from api
         return  res.json()
       }
-      swal(" Upss! Terjadi Kesalahan!", {
+      Swal.fire( {
             icon: "warning",
-            buttons: false,
+            text:" Upss! Terjadi Kesalahan!",
+            showConfirmButton: false,
             timer: 3000
           });
-    }) //gunakan ENV
-     .then((res)=>{ 
-       let temp="";
-        res.data.data.forEach((index)=>{  
-        temp +=
-        `<tr >
-          <td>${index.nama}</td>
-          <td>${index.kk}</td>
-          <td>${index.nik}</td>
-          <td>${index.tanggal_lahir}</td>
-          <td>${index.status}</td>
-          <td>${index.jenis_kelamin}</td>
-          <td>
-            <div class="row">
-             <button type="button" name="edit" value="${index.id}" class="col-5 btn_edit btn-xs btn bg-warning "><i class="fas fa-pen"></i></button>
-              <button type="button" name="delete" value="${index.id}" class="col-5 btn_delete btn-xs btn mx-1 bg-gradient-danger"><i class="fas fa-trash-alt"></i></button>
-            </div>
-          </td>
-          </tr>` 
-        });
+      }).then((res)=>{    //process data
+        let temp="";
+          res.data.data.forEach((index)=>{  
+          temp +=
+          `<tr >
+            <td>${index.nama}</td>
+            <td>${index.kk}</td>
+            <td>${index.nik}</td>
+            <td>${index.tanggal_lahir}</td>
+            <td>${index.status}</td>
+            <td>${index.jenis_kelamin}</td>
+            <td>
+              <div class="row">
+              <button type="button" name="edit" value="${index.id}" class="col-5 btn_edit btn-xs btn bg-warning "><i class="fas fa-pen"></i></button>
+                <button type="button" name="delete" value="${index.id}" class="col-5 btn_delete btn-xs btn mx-1 bg-gradient-danger"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </td>
+            </tr>` 
+          });
         document.querySelector("#tbody").innerHTML=temp;   
-          
         document.querySelector('[name="table_info"]').innerText=`Halaman ${res.data.current_page} dari ${res.data.last_page} total data ${res.data.total} ` ;
         
         let page_temp='';
@@ -48,40 +45,42 @@ const _token = document.querySelector('meta[name="csrf-token"]').content;
         return res.data.links;
 
     }).then((res)=>{
-      document.querySelectorAll('[name=edit]').forEach((index,key)=>{
+      document.querySelectorAll('[name=edit]')
+      .forEach((index,key)=>{
         const id =index.value;
         index.onclick= ()=> edit(id);
         document.querySelectorAll('.btn_delete')[key].onclick=()=>delate(id)
       });
-      document.querySelectorAll('.page-link').forEach((index,key)=>{
+      document.querySelectorAll('.page-link')
+      .forEach((index,key)=>{
         index.onclick=()=>dataTable(res[key].url)
       })   
-
     })
-    
   } //closing tag function dataTable
-  
+
   // ###########FUNC ONLOAD###########
   
   window.addEventListener("onLoad",dataTable());
 
   // ##################REFRESH#########################
-  document.getElementById("button-refresh").addEventListener("click",(e)=>{
+  document.getElementById("button-refresh")
+  .addEventListener("click",(e)=>{
       document.querySelector('[name="uid"]').removeAttribute("value")
       document.querySelector('[name="no_kk"]').value="";
       document.querySelector('[name="no_nik"]').value="";
       document.querySelector('[name="nama"]').value="";
       document.querySelector('[name="tgl_lahir"]').value="";
       document.querySelector('[name="status"]').value="Pilih";
-       swal("Berhasil! create", {
-            // icon: "info",
-            buttons: false,
+       Swal.fire({
+            icon: "info",
+            showConfirmButton: false,
             timer: 200
           })
   })
   
 // ###########FUNCTION CREATE DATA###########
-document.querySelector("#button-sub").addEventListener("click",async function(e){
+document.querySelector("#button-sub")
+.addEventListener("click",async function(e){
   e.preventDefault() ;
       const uid = document.querySelector('[name="uid"]');
       const kk = document.querySelector('[name="no_kk"]');
@@ -90,7 +89,6 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
       const gender = document.querySelector('[name="radio"]:checked');
       const tgl_lahir = document.querySelector('[name="tgl_lahir"]');
       const status = document.querySelector('[name="status"]');
-      console.log(status.value)
       const data={
         "id":uid.value,
         "kk":kk.value,
@@ -101,7 +99,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         "status":status.value,
         "_token": _token        
       };
-      await fetch(`https://app-desa.herokuapp.com/api/api_warga/create`,{
+      await fetch(`${window.location.origin}/api/api_warga/create`,{
         method:'POST',
         headers: {
           'Accept' : 'application/json, text/plaint ,*/*',
@@ -112,12 +110,11 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         },
         body:JSON.stringify(data)
       }).then((res)=>{
-        let i = res.json().then((e)=>console.log(e))
-
         if(res.status==200){
-            swal("Berhasil! create", {
+            Swal.fire({
             icon: "success",
-            buttons: false,
+            title:"Berhasil! create",
+            showConfirmButton: false,
             timer: 1000
           });
         uid.removeAttribute("value")
@@ -127,33 +124,25 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         tgl_lahir.value=""
         status.value="Pilih"
         }
-        
-        //ERROR walau status 200
-        // swal("Upss!! Terjadi Kesalahan!", {
-        //     icon: "warning",
-        //     buttons: false,
-        //     timer: 3000
-        //   });
       }).then(()=>dataTable());
   });
     
-    
 // ###########FUNCTION SEARCH###########
-document.querySelector('[name="search_input"]').addEventListener("input",async function (e){
+document.querySelector('[name="search_input"]')
+.addEventListener("input",async function (e){
   const value = e.target.value;
-
-  await fetch(`https://app-desa.herokuapp.com/api/api_warga?search=${value}`)
+  await fetch(`${window.location.origin}/api/api_warga?search=${value}`)
   .then((res)=>{
     if(res.status==200){
       return  res.json()
     }
-    swal("Upss!! Terjadi Kesalahan!", {
+    Swal.fire({
       icon: "warning",
-      buttons: false,
+      title:"Upss!! Terjadi Kesalahan!",
+      showConfirmButton: false,
       timer: 3000
     });
-  })
-  .then((res)=>{
+  }).then((res)=>{
     let temp="";
     if(res.data.data==0){ 
     temp=
@@ -210,18 +199,18 @@ document.querySelector('[name="search_input"]').addEventListener("input",async f
 
 // ###########FUNC###########
 const edit = async (id)=>{
-  await fetch(`https://app-desa.herokuapp.com/api/api_warga/getDataById/${id}`)
+  await fetch(`${window.location.origin}/api/api_warga/getDataById/${id}`)
   .then((res)=>{ 
-  if(res.status==200){
-    return res.json()
-  }
-   swal("Upss!! Terjadi Kesalahan!", {
-    icon: "warning",
-    buttons: false,
-    timer: 3000
-  });
+    if(res.status==200){
+      return res.json()
+    }
+    Swal.fire( {
+      icon: "warning",
+      title:"Upss!! Terjadi Kesalahan!",
+      showConfirmButton: false,
+      timer: 3000
+    });
 }).then((res)=>{
-
     //Code here
       let i = res.data.jenis_kelamin=='L'?0:1
       document.querySelector('[name="uid"]').value=res.data.id;
@@ -233,8 +222,8 @@ const edit = async (id)=>{
       document.querySelector('[name="status"]').value=res.data.status
       smoothscroll()
   })
-
 }
+// ##########scroll############
 function smoothscroll(){
     const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
     if (currentScroll > 0) {
@@ -244,45 +233,46 @@ function smoothscroll(){
 }
 // ###########FUNC###########
 const delate= async (id)=>{
- await fetch(`https://app-desa.herokuapp.com/api/api_warga/getDataById/${id}`)
-  .then((res)=>{ 
+ await fetch(`${window.location.origin}/api/api_warga/getDataById/${id}`)
+.then((res)=>{ 
   if(res.status==200){
     return res.json()
   }
-
-   swal("Upss!! Terjadi Kesalahan!", {
+   Swal.fire( {
     icon: "warning",
-    buttons: false,
+    title:"Upss!! Terjadi Kesalahan!",
+    showConfirmButton: false,
     timer: 3000
   });
 }).then((res)=>{  
-    swal({
+    Swal.fire({
     title: "Anda Yakin ?",
     text: `Akan menghapus  ${res.data.nama}`,
     icon: "warning",
-    buttons: true,
-    dangerMode: true,
+    showConfirmButton: true,
     }).then(async (comfirm)=>{ //deleted execute
         if(comfirm){
-          await fetch(`https://app-desa.herokuapp.com/api/api_warga/delete/${id}`).then((res)=>res.json())
+          await fetch(`${window.location.origin}/api/api_warga/delete/${id}`).then((res)=>res.json())
             .then((res)=>{
               if(res.code==200){
-                console.log(res.code)
-                swal("Penghapusan Berhasil!", {
-                icon: "success",
-                buttons: false,
-                timer: 1000
-                })
-              dataTable()
-              return
-              }
-                 swal("Upss!! Terjadi Kesalahan!", {
+                  Swal.fire( {
+                  icon: "success",
+                  title:"Penghapusan Berhasil!",
+                  showConfirmButton: false,
+                  timer: 1000
+                  })
+                dataTable()
+                return
+              }else{ 
+                 Swal.fire({
                   icon: "warning",
-                  buttons: false,
+                  title:"Upss!! Terjadi Kesalahan!",
+                  showConfirmButton: false,
                   timer: 5000
                 });
-          })
-        }
+              } //close else
+          }) //close response delete
+        }// close if
       }) //close deleted execute
-  })
+  })//close then getById
 }// closing func delete
