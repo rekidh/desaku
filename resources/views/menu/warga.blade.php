@@ -26,8 +26,8 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/summernote/summernote-bs4.min.css">
-  <script type="text/javascript" src="{{resource_path('js/app.js')}}"></script>
-  {{-- @vite(['resources/js/app.js']) --}}
+  {{-- <script type="text/javascript" src="{{resource_path('js/app.js')}}"></script> --}}
+  @vite(['resources/js/app.js'])
   
 </head>
 
@@ -56,8 +56,7 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Penduduk</li>
+          <li class="breadcrumb-item active">{{Request::path() }}</li>
         </ol>
       </div>
     </div>
@@ -76,18 +75,16 @@
 
         <div class="row col-12 mt-1 mb-3">
           <div class="input-group col-7">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary rounded-pill ">
                 {{-- <i class="fas fa-search fa-fw"></i> --}}
                 Print
               </button>
           </div>
           <div class="input-group col-5" >
-            <input class="form-control " name="search_input" type="search" placeholder="Cari..." aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-primary" name="search_btn">
+            <input class="form-control rounded-pill " name="search_input" type="search" placeholder="Cari..." aria-label="Search">
+              {{-- <button class=" btn btn-primary" name="search_btn">
                 <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
+              </button> --}}
           </div>
         </div>
 

@@ -2,7 +2,7 @@
   <div class="row">
       <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card mb-2 bg-gradient-dark">
-            <img class="card-img-top" src="{{asset('AdminLTE/dist')}}/img/photo1.png" alt="Dist Photo 1">
+            <img class="card-img-top" src="{{asset('/image/Reki_Desma_Haldi_2022_10_21S1666327046.png')}}" alt="Dist Photo 1">
             <div class="card-img-overlay d-flex flex-column justify-content-end">
               <h5 class="card-title text-primary text-white">Card Title</h5>
               <p class="card-text text-white pb-2 pt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor.</p>
@@ -12,7 +12,7 @@
       </div>
       <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card mb-2">
-          <img class="card-img-top" src="{{asset('AdminLTE/dist')}}/img/photo2.png" alt="Dist Photo 2">
+          <img class="card-img-top" src="{{asset('/image/Reki_Desma_Haldi_2022_10_21S1666327046.png')}}" alt="Dist Photo 2">
           <div class="card-img-overlay d-flex flex-column justify-content-center">
             <h5 class="card-title text-white mt-5 pt-2">Card Title</h5>
               <p class="card-text pb-2 pt-1 text-white">
@@ -26,7 +26,7 @@
       </div>
     <div class="col-md-12 col-lg-6 col-xl-4">
       <div class="card mb-2">
-        <img class="card-img-top" src="{{asset('AdminLTE/dist')}}/img/photo3.jpg" alt="Dist Photo 3">
+        <img class="card-img-top" src="{{asset('/image/Reki_Desma_Haldi_2022_10_21S1666327046.png')}}" alt="Dist Photo 3">
         <div class="card-img-overlay">
           <h5 class="card-title text-primary">Card Title</h5>
           <p class="card-text pb-1 pt-1 text-white">
