@@ -120,7 +120,7 @@ class UserAuth extends Controller
             // named
             $name = str_replace(' ', '_', Auth::user()->name);
             $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $image_type; // name format
-
+            $req->image->move(public_path('images/'), $imageName);
             $folderPath = public_path('image/');
             $imageFullPath = $folderPath . $imageName;
             file_put_contents($imageFullPath, $image_base64);
