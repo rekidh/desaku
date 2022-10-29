@@ -223,7 +223,7 @@
           </div>
           <div class="modal-body d-flex align-items-center justify-content-center" style="height: 70vh;  ">
               <img name="modal-crop" style="height: 300px; width:300px" 
-              src="{{asset('public/images')}}/{{Auth::user()->user_image}}"
+              src="{{asset('images')}}/{{Auth::user()->user_image}}"
               alt="User profile picture">
           </div>
           <div id="prev"></div>
@@ -270,6 +270,8 @@
         giudes:false,
         center:false,
         viewMode:1,
+      minContainerWidth:350,
+      minContainerHeight:350,
       })
   
   const showModal=()=>{
