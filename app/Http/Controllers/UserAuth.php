@@ -100,7 +100,7 @@ class UserAuth extends Controller
     {
         if ($req->file('image')) { // cek ada apa tidaknya image baru
             if ($req->old_image) {
-                $destination = public_path('image/') . $req->old_image;
+                $destination = public_path('images/') . $req->old_image;
                 File::delete($destination);
             }
 
@@ -120,10 +120,9 @@ class UserAuth extends Controller
             // named
             $name = str_replace(' ', '_', Auth::user()->name);
             $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $image_type; // name format
-            Storage::makeDirectory('image');
+            //moving image to public dir
             $req->image->move(public_path('images/'), $imageName);
-            $folderPath = public_path('image/');
-            $imageFullPath = $folderPath . $imageName;
+            $imageFullPath = public_path('images/') . $imageName;
             file_put_contents($imageFullPath, $image_base64);
 
             $userId = Auth::user()->id;
