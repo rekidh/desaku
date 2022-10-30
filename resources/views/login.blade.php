@@ -21,7 +21,7 @@
       <h5><i class="icon fas fa-ban"></i> {{session('loginError')}}</h5>
       </div>
   @endif
-<div class="login-box">
+<div class="login-box ">
   <div class="login-logo">
     <a href="/"><b>Login </b>Admin</a>
   </div>
@@ -30,17 +30,17 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in </p>
 
-      <form action="/login" method="post">
+      <form action="{{route('login')}}" method="post">
         @csrf
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
           <input required 
           type="email"
           name="email"
           value="{{old('email')}}"
-          class="@error('email') is-invalid @enderror form-control" 
+          class="@error('email') is-invalid @enderror form-control border-0" 
           placeholder="Email">
-          <div class="input-group-append">
-            <div class="input-group-text">
+          <div class="input-group-append  ">
+            <div class="input-group-text border-0 ">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
@@ -49,14 +49,14 @@
           @enderror
         </div>
 
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
           <input required 
           name="password"
           type="password" 
-          class="@error('password') is-invalid @enderror form-control" 
+          class="@error('password') is-invalid @enderror form-control  border-0 " 
           placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
+          <div class="input-group-append ">
+            <div class="input-group-text border-0">
               <span class="fas fa-lock"></span>
             </div>
           </div>
@@ -67,16 +67,14 @@
 
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Ingat Saya
-              </label>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+              <label class="form-check-label" for="exampleRadios1">Ingat saya</label>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+            <button type="submit" class="btn btn-primary rounded-pill btn-block">Masuk</button>
           </div>
           <!-- /.col -->
         </div>

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
   
 </head>
-<body>
+<body class="hold-transition login-page">
     @if(session()->has('registerError'))
       <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -22,25 +22,25 @@
       </div>
     @endif
 
-    <div class="register-box mx-auto mt-5 ">
+    <div class="register-box mx-auto ">
       <div class="register-logo">
         <a href="/login"><b>App Desa</b> Registrasi</a>
       </div>
 
-      <div class="card">
+      <div class="card ">
         <div class="card-body register-card-body">
           <p class="login-box-msg">Daftar Akun </p>
 
           <form action="{{route('userRegister')}}" method="post">
             @csrf
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
 
                 <input required type="text" name="name" value="{{old('name')}}"
-                class=" @error('name') is-invalid @enderror form-control" 
+                class=" @error('name') is-invalid @enderror form-control border-0 " 
                 placeholder="Full name">
 
                 <div class="input-group-append">
-                  <div class="input-group-text">
+                  <div class="input-group-text border-0 ">
                     <span class="fas fa-user"></span>
                   </div>
                 </div>
@@ -49,12 +49,12 @@
                 @enderror
               </div>
             {{--  --}}
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
                 <input required type="email" name="email" value="{{old('email')}}"
-                  class=" @error('email') is-invalid @enderror form-control" 
+                  class=" @error('email') is-invalid @enderror form-control border-0 " 
                   placeholder="Email">
                 <div class="input-group-append">
-                  <div class="input-group-text">
+                  <div class="input-group-text border-0 ">
                     <span class="fas fa-envelope"></span>
                   </div>
                 </div>
@@ -63,12 +63,12 @@
                 @enderror
               </div>
               {{--fpassword  --}}
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
                 <input required type="password" name="password" 
-                class="@error('password') is-invalid @enderror form-control" 
+                class="@error('password') is-invalid @enderror form-control border-0 " 
                 placeholder="Password">
                 <div class="input-group-append">
-                  <div class="input-group-text">
+                  <div class="input-group-text border-0 ">
                     <span class="fas fa-lock"></span>
                   </div>
                 </div>
@@ -77,12 +77,12 @@
                 @enderror
               </div>
               {{--confirm pass  --}}
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 border border-1 rounded-pill overflow-hidden">
                 <input required type="password" name="password2" 
-                class=" @error('password2') is-invalid @enderror form-control" 
+                class=" @error('password2') is-invalid @enderror form-control border-0 " 
                 placeholder="Retype password">
                 <div class="input-group-append">
-                  <div class="input-group-text">
+                  <div class="input-group-text border-0 ">
                     <span class="fas fa-lock"></span>
                   </div>
                 </div>
@@ -90,11 +90,13 @@
                   <div  class="invalid-feedback">{{$message}}</div>
                 @enderror
               </div>
-              <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Daftar</button>
+              <div class="row mt-5">
+                <a href="/login" class="col-7">Saya telah memiliki akun</a>
+                  <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block rounded-pill">Daftar</button>
+                  </div>
               </div>
           </form>
-            <a href="/login" class="text-center mb-5">Saya telah memiliki akun</a>
         </div>
       </div>
     </div>

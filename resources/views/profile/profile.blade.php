@@ -93,7 +93,7 @@
                       <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="text" name="name" id="name" class="form-control"  placeholder="Name"
+                          <input type="text" name="name" id="name" class="form-control rounded-pill"  placeholder="Name"
                           value="{{Auth::user()->name}}"
                           >
                           @error('name')
@@ -105,7 +105,7 @@
                       <div class="form-group row">
                         <label for="Email" class="col-sm-2 col-form-label" >Email</label>
                         <div class="col-sm-10">
-                          <input type="email" name="email" id="email" class="form-control"  placeholder="Email"
+                          <input type="email" name="email" id="email" class="form-control rounded-pill"  placeholder="Email"
                           value="{{Auth::user()->email}}"
                           >
                           @error('email')
@@ -117,7 +117,7 @@
                       <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                          <input type="password" name="password" id="password" class="form-control"  placeholder="Password">
+                          <input type="password" name="password" id="password" class="form-control rounded-pill"  placeholder="Password">
                         </div>
                           @error('password')
                             <div  class="invalid-feedback">{{$message}}</div>
@@ -127,7 +127,7 @@
                       <div class="form-group row">
                         <label for="new_password" class="col-sm-2 col-form-label">New Password</label>
                         <div class="col-sm-10">
-                          <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control">
+                          <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control rounded-pill">
                            @error('new_password')
                             <div  class="invalid-feedback">{{$message}}</div>
                           @enderror
@@ -137,7 +137,7 @@
                       <div class="form-group row">
                         <label for="confirm_new_password" class="col-sm-2 col-form-label">Comfirm Password</label>
                         <div class="col-sm-10">
-                          <input type="password" name="comfirm_new_password" id="comfirm_password" class="form-control"  placeholder="Comfirm Password">
+                          <input type="password" name="comfirm_new_password" id="comfirm_password" class="form-control rounded-pill"  placeholder="Comfirm Password">
                           @error('confirm_new_password')
                             <div  class="invalid-feedback">{{$message}}</div>
                           @enderror
@@ -145,8 +145,8 @@
                       </div>
 
                       <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
+                        <div class="offset-sm-10 col-sm-3">
+                          <button type="submit" class="btn btn-danger rounded-pill">Submit</button>
                         </div>
                       </div>
                     </form>
