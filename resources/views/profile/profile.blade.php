@@ -77,7 +77,7 @@
               <div class="card-body ">
                 <div  class="text-center">
                   <img name="profile_user" class="profile-user-img img-fluid img-circle"
-                       src="{{asset('images')}}/{{Auth::user()->user_image}}"
+                       src="{{asset('storage/images')}}/{{Auth::user()->user_image}}"
                        alt="User profile picture">
                 </div>
 

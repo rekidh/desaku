@@ -121,9 +121,10 @@ class UserAuth extends Controller
             $name = str_replace(' ', '_', Auth::user()->name);
             $imageName = $name . '_' . $h["year"] . '_' . $h["mon"] . '_' . $h["mday"] . 'S' . $h[0] .  '.' . $image_type; // name format
             //moving image to public dir
-            $req->image->move(public_path('images/'), $imageName);
-            $imageFullPath = public_path('images/') . $imageName;
-            file_put_contents($imageFullPath, $image_base64);
+            $imageFullPath = 'images/' . $imageName;
+            Storage::disk('public')->put($imageFullPath, $image_base64);
+            // dd($i);
+            // // file_put_contents($imageFullPath, $image_base64);
 
             $userId = Auth::user()->id;
             $update = User::find($userId);
