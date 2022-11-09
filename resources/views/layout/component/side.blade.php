@@ -2,7 +2,11 @@
   <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="{{asset('image')}}/{{Auth::user()->user_image}}" class="img-circle elevation-2" alt="User Image">
+      @if (file_exists(public_path('image/{{Auth::user()->user_image}}')))
+          <img src="{{asset('image')}}/{{Auth::user()->user_image}}" class="img-circle elevation-2" alt="User Image">
+      @else
+          <img src="{{asset('image')}}/default_user.png" class="img-circle elevation-2" alt="User Image">
+      @endif
       </div>
       <div class="info">
         <a href="{{route('user_profile')}}" class="d-block">@if(Auth::check('name')) {{Auth::user()->name}} @else Nama belum di isi  @endif</a>

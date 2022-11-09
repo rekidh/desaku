@@ -76,9 +76,11 @@
             <div class="card card-primary card-outline">
               <div class="card-body ">
                 <div  class="text-center">
-                  <img name="profile_user" class="profile-user-img img-fluid img-circle"
-                       src="{{asset('image')}}/{{Auth::user()->user_image}}"
-                       alt="User profile picture">
+                        @if (file_exists(public_path('image/{{Auth::user()->user_image}}')))
+                            <img src="{{asset('image')}}/{{Auth::user()->user_image}}" name="profile_user" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                        @else
+                            <img src="{{asset('image')}}/default_user.png" name="profile_user" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                        @endif
                 </div>
 
                 <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
