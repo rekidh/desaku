@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('nik')->index();
             $table->string('nama', 255);
             $table->string('jenis_kelamin');
-            $table->string('tanggal_lahir', 50);
+            $table->date('tanggal_lahir', 50);
             $table->string('status');
             $table->timestamps();
         });

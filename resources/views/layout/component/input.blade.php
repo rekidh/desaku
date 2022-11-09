@@ -14,11 +14,11 @@
             <div class="row">
               <div class="col-7">
                 <label for="no_kk">NO KK</label>
-                <input  name="no_kk" id="no_kk" type="text" class="form-control" placeholder="Nomor KK">
+                <input type="number" name="no_kk" id="no_kk" type="text" class="form-control" placeholder="Nomor KK">
               </div>
               <div class="col-5">
                 <label for="no_nik">NIK</label>
-                <input name="no_nik" id="no_nik" type="text" class="form-control" placeholder="NIK">
+                <input type="number" name="no_nik" id="no_nik" type="text" class="form-control" placeholder="NIK">
               </div>
             </div>
           <br>
@@ -42,7 +42,7 @@
             <div class="row">
               <div class="col-7">
                 <label for="tgl_lahir">Tangal Lahir</label>
-                <input name="tgl_lahir" id="tgl_lahir" type="text" class="form-control" placeholder="dd/mm/yyyy">
+                <input type="date" name="tgl_lahir" id="tgl_lahir" type="text" class="form-control" placeholder="dd/mm/yyyy">
               </div>
               <div class="form-group col-5">
                 <label for="status">Status</label>
