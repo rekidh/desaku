@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
   
 </head>
-<body>
+<body class="hold-transition login-page bg-cyan " >
     @if(session()->has('registerError'))
       <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -22,12 +22,12 @@
       </div>
     @endif
 
-    <div class="register-box mx-auto mt-5 ">
+    <div class="register-box mx-auto mt-5  ">
       <div class="register-logo">
-        <a href="/login"><b>App Desa</b> Registrasi</a>
+        <a href="/login" class="text-white"><b>App Desa</b> Registrasi</a>
       </div>
 
-      <div class="card">
+      <div class="card border rounded">
         <div class="card-body register-card-body">
           <p class="login-box-msg">Daftar Akun </p>
 
@@ -94,7 +94,7 @@
                 <button type="submit" class="btn btn-primary btn-block">Daftar</button>
               </div>
           </form>
-            <a href="/login" class="text-center mb-5">Saya telah memiliki akun</a>
+            <a href="/login" class="text-center mt-2 mb-5">Saya telah memiliki akun</a>
         </div>
       </div>
     </div>

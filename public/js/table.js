@@ -4,7 +4,7 @@ const _token = document.querySelector('meta[name="csrf-token"]').content;
 // ###########FUNC FETCH DATA###########
 // TABLE DISPLAY
   const dataTable = async (url_param)=> { 
-    const url = url_param? url_param:`https://app-desa.herokuapp.com/api/api_warga`;
+    const url = url_param? url_param:`${window.location.origin}/api/api_warga`;
      await fetch(url).then((res)=>{
       if(res.status==200){
         return  res.json()
@@ -101,7 +101,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
         "status":status.value,
         "_token": _token        
       };
-      await fetch(`https://app-desa.herokuapp.com/api/api_warga/create`,{
+      await fetch(`${window.location.origin}/api/api_warga/create`,{
         method:'POST',
         headers: {
           'Accept' : 'application/json, text/plaint ,*/*',
@@ -142,7 +142,7 @@ document.querySelector("#button-sub").addEventListener("click",async function(e)
 document.querySelector('[name="search_input"]').addEventListener("input",async function (e){
   const value = e.target.value;
 
-  await fetch(`https://app-desa.herokuapp.com/api/api_warga?search=${value}`)
+  await fetch(`${window.location.origin}/api/api_warga?search=${value}`)
   .then((res)=>{
     if(res.status==200){
       return  res.json()
@@ -210,7 +210,7 @@ document.querySelector('[name="search_input"]').addEventListener("input",async f
 
 // ###########FUNC###########
 const edit = async (id)=>{
-  await fetch(`https://app-desa.herokuapp.com/api/api_warga/getDataById/${id}`)
+  await fetch(`${window.location.origin}/api/api_warga/getDataById/${id}`)
   .then((res)=>{ 
   if(res.status==200){
     return res.json()
@@ -244,7 +244,7 @@ function smoothscroll(){
 }
 // ###########FUNC###########
 const delate= async (id)=>{
- await fetch(`https://app-desa.herokuapp.com/api/api_warga/getDataById/${id}`)
+ await fetch(`${window.location.origin}/api/api_warga/getDataById/${id}`)
   .then((res)=>{ 
   if(res.status==200){
     return res.json()
@@ -264,7 +264,7 @@ const delate= async (id)=>{
     dangerMode: true,
     }).then(async (comfirm)=>{ //deleted execute
         if(comfirm){
-          await fetch(`https://app-desa.herokuapp.com/api/api_warga/delete/${id}`).then((res)=>res.json())
+          await fetch(`${window.location.origin}/api/api_warga/delete/${id}`).then((res)=>res.json())
             .then((res)=>{
               if(res.code==200){
                 console.log(res.code)

@@ -14,7 +14,9 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/adminlte.min.css">
 </head>
-<body class="hold-transition login-page">
+<body 
+class="hold-transition login-page bg-cyan "
+>
   @if(session()->has('loginError'))
     <div class="alert alert-danger alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -23,10 +25,10 @@
   @endif
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"><b>Login </b>Admin</a>
+    <a href="/" class="text-white"><b>Login </b>Admin</a>
   </div>
   <!-- /.login-logo -->
-  <div class="card">
+  <div class="card border rounded ">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in </p>
 
@@ -81,7 +83,7 @@
           <!-- /.col -->
         </div>
       </form>
-      <p class="mb-1"><a href="/*">Lupa Password ?</a></p>
+      {{-- <p class="mb-1"><a href="/*">Lupa Password ?</a></p> --}}
       <p class="mb-0"><a href="/register" class="text-center">Registasi Member Baru</a></p>
     </div>
     <!-- /.login-card-body -->
